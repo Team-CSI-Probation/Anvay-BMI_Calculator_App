@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+// import 'package:flutter/painting.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +19,8 @@ class _MyAppState extends State<MyApp> {
   double BMIScore = 0.0;
   String Status = '';
   var GenderColor = Colors.black;
+  var StatusColor = Colors.black;
+
   double CalBMI(int ht, int wt) {
     return (wt / (ht / 100 * ht / 100));
     // (wt / ((ht / 100) * (ht / 100)))
@@ -27,12 +29,16 @@ class _MyAppState extends State<MyApp> {
   void BMIScale(double bmiscore) {
     if (bmiscore < 18.5) {
       Status = 'Underweight';
+      StatusColor = Colors.black54;
     } else if (bmiscore >= 18.5 && bmiscore < 25.0) {
       Status = 'Normal';
+      StatusColor = Colors.green;
     } else if (bmiscore >= 25.0 && bmiscore < 30.0) {
       Status = 'Overweight';
+      StatusColor = Colors.orange;
     } else {
       Status = 'Obese';
+      StatusColor = Colors.red;
     }
   }
 
@@ -70,7 +76,7 @@ class _MyAppState extends State<MyApp> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            print('Male Selected');
+                            // print('Male Selected');
                             setState(() {
                               valid = true;
                               GenderColor = Colors.lightBlueAccent;
@@ -263,7 +269,7 @@ class _MyAppState extends State<MyApp> {
                                             Text(
                                               '$Status',
                                               style: TextStyle(
-                                                color: GenderColor,
+                                                color: StatusColor,
                                                 fontFamily: 'Times New Roman',
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold,
@@ -289,7 +295,18 @@ class _MyAppState extends State<MyApp> {
                                 });
                               } else {
                                 SnackBar validity = SnackBar(
-                                    content: Text('Select Genger First !'));
+                                    backgroundColor: Colors.red,
+                                    content: Container(
+                                        decoration: BoxDecoration(),
+                                        child: Text(
+                                          'Select Gender First !',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20,
+                                          ),
+                                        )));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(validity);
                               }
